@@ -15,8 +15,13 @@ echo "-------------------------------------------------------"
 smem=$(free | grep Mem | awk '{print $3/$2*100}')
 smem=$(echo "scale=2; $smem / 1.0" | bc -l)
 
-sswap=$(free | grep Swap | awk '{print $3/$2*100}')
-sswap=$(echo "scale=2; $sswap / 1.0" | bc -l)
+check_swap=$(free | grep Swap | awk '{print $2}')
+sswap=0
+
+if [[ $check_swap != 0 ]]; then
+    sswap=$(free | grep Swap | awk '{print $3/$2*100}')
+    sswap=$(echo "scale=2; $sswap / 1.0" | bc -l)
+fi;
 
 echo "Monitoring disk usage is starting..."
 echo "-------------------------------------------------------"
