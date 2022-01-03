@@ -1,6 +1,18 @@
 #!/bin/bash
 
-echo "Converting text to CSV format has been started!"
+green_color='\e[0;32m'
+red_color='\e[0;31m'
+yellow_color='\e[0;33m'
+rest_color='\e[0m'
+
+echo -e $green_color"Converting text to CSV format has been started!"$rest_color
+
+verbose=$1
+
+if [[ $verbose == "--debug" ]]; then
+    echo -e $yellow_color"Enabling the debug mode."$rest_color
+    echo ""
+fi;
 
 if [[ ! -d "$PWD/converted/" ]]; then
     mkdir "$PWD/converted/"
@@ -18,11 +30,15 @@ for text_file_name in $(ls *.txt)
 do
     measured_contents=$(cat $text_file_name)
     measured_contents=$(echo $measured_contents | sed -e "s/ /,/g")
-    measured_8601_datetime=$(echo $measured_contents | awk '{split($1,a,"."); print a[1]}')
-    measured_3339_datetime=$(date --date="$measured_8601_datetime" --rfc-3339=seconds)
+    measured_8601_datetime=$(echo $text_file_name | awk '{split($1,a,"."); print a[1]}')
+    measured_3339_datetime=$(date --date="$measured_8601_datetime" --rfc-3339=seconds --utc)
+    measured_3339_datetime=$(echo $measured_3339_datetime | sed -e "s/+00:00//g")
     measured_contents="$measured_contents,$measured_3339_datetime"
-    echo "$measured_contents"
-    break;
+    if [[ $verbose == "--debug" ]]; then
+        echo "$measured_contents"
+    fi;
+    echo "$measured_contents" > "$PWD/converted/$measured_8601_datetime.csv"
 done;
 
-echo "Converting text to CSV format has been done!"
+echo ""
+echo -e $green_color"Converting text to CSV format has been done!"$rest_color
