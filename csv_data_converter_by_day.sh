@@ -18,15 +18,14 @@ if [[ ! -d "$PWD/converted/" ]]; then
     mkdir "$PWD/converted/"
 fi;
 
-ls *.txt > /dev/null 2>&1
+yesterday_date="$(date --utc --date="yesterday" +%F)"
+ls | grep "$yesterday_date" > /dev/null 2>&1
 
 if [[ $? != 0 ]]; then
-    echo "There're no text files on the $PWD directory."
+    echo -e $red_color"There're no text files on the $PWD directory."$rest_color
     exit 1;
 fi;
 
-
-yesterday_date="$(date --utc --date="yesterday" +%F)"
 
 for text_file_name in $(ls | grep "$yesterday_date")
 do
@@ -43,4 +42,5 @@ do
 done;
 
 echo ""
+echo -e $yellow_color"All converted files will be saved in $PWD/converted directory!"$rest_color
 echo -e $green_color"Converting text to CSV format has been done!"$rest_color
