@@ -32,7 +32,7 @@ table_name=$(echo $mysql_auth | awk '{print $6}')
 
 for csv_file_name in $(ls ./converted/*.csv)
 do
-    insert_cmd="INSERT INTO $db_name.$table_name FORMAT CSV $(cat ./converted/$csv_file_name)"
+    insert_cmd="INSERT INTO $db_name.$table_name FORMAT CSV $(cat $csv_file_name)"
     mysql -h "$ip_address" -u "$user_name" -P "$port_number" -p"$password" -e "$insert_cmd"
     if [[ $? != 0 ]]; then
         echo -e $red_color"The $csv_file_name is failed to import."$rest_color
