@@ -1,3 +1,4 @@
 *.txt
+*.csv
 converted/
-mysql_auth.txt
+archived/
