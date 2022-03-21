@@ -23,6 +23,25 @@
 
 - Download the `data_cleaner_by_day.sh` to remove yesterday text file in current directory.
 
+## 3e Green Devices
+
+- Before running the Python programs, it should run following commands to ensure required Python modules are installed:
+    - `sudo apt-get update`
+    - `sudo apt-get install python3-requests`
+    - `pip3 install -U clickhouse-driver`
+- It should have the [GW-06 gateway](https://www.3egreen.com/tw/product/gw06-03/).
+- It should have the [detecting devices](https://www.3egreen.com/tw/product-category/detecting/).
+- Creating the `./uuid.txt` file to define detecting device UUID.
+
+## Run device fetcher
+
+- Running the `python3 3e_green_devices.py` program every 1 minute with Crontab.
+- Running the `python3 3e_green_devices_importer.py` program every 5 minutes with Crontab.
+- Running the `python3 3e_green_devices_cleaner_by_week.py` program every `00:01:00` with Crontab.
+- The above command will store the masured result with the CSV file format.
+
+## Run data importer
+
 ## References
 
 - https://helloacm.com/bash-script-to-monitor-the-cpu-frequency-and-temperature-on-raspberry-pi
