@@ -1,0 +1,5 @@
+ssh_server_host_address
+ssh_username
+ssh_port
+ssh_password
+ssh_complete_remote_path
