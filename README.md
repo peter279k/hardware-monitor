@@ -28,7 +28,7 @@
 - Before running the Python programs, it should run following commands to ensure required Python modules are installed:
     - `sudo apt-get update`
     - `sudo apt-get install python3-requests`
-    - `pip3 install -U clickhouse-driver`
+    - `pip3 install -U -r requirements.txt`
 - It should have the [GW-06 gateway](https://www.3egreen.com/product/gw06-03/).
 - It should have the [detecting devices](https://www.3egreen.com/product-category/detecting/).
 - Creating the `./uuid.txt` file to define detecting device UUID.
@@ -36,16 +36,22 @@
 ## Running the device fetcher
 
 - Running the `python3 3e_green_devices.py` program every 1 minute with Crontab.
-- If the hardware sources are good enough, it can run the `python3 3e_green_devices_cleaner_by_week.py` program every `00:01:00` with Crontab.
 - The above command will store the masured result with the CSV file format.
 
 ## Running the device batch cleaner
 
 - Running the `./batch_clean.sh` to clean the outdated data. And it can save the hardware sources.
+- If the hardware sources are good enough, it can run the `python3 3e_green_devices_cleaner_by_week.py` program every `00:01:00` with Crontab.
 
-## Running the data importer
+## Running the data importer (ClickHouse client)
 
+- `mysql_auth.txt` setting setup. It can refer the example `mysql_auth.txt.example` file.
 - Running the `python3 3e_green_devices_importer.py` program every 5 minutes with Crontab.
+
+## Running the data importer (SSH client)
+
+- `ssh_auth.txt` setting setup. It can refer the example `ssh_auth.txt.example` file.
+- Running the `python3 3e_green_devices_ssh_client.py` program every 5 minutes with Crontab.
 
 ## References
 
