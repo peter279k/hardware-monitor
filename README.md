@@ -29,18 +29,23 @@
     - `sudo apt-get update`
     - `sudo apt-get install python3-requests`
     - `pip3 install -U clickhouse-driver`
-- It should have the [GW-06 gateway](https://www.3egreen.com/tw/product/gw06-03/).
-- It should have the [detecting devices](https://www.3egreen.com/tw/product-category/detecting/).
+- It should have the [GW-06 gateway](https://www.3egreen.com/product/gw06-03/).
+- It should have the [detecting devices](https://www.3egreen.com/product-category/detecting/).
 - Creating the `./uuid.txt` file to define detecting device UUID.
 
-## Run device fetcher
+## Running the device fetcher
 
 - Running the `python3 3e_green_devices.py` program every 1 minute with Crontab.
-- Running the `python3 3e_green_devices_importer.py` program every 5 minutes with Crontab.
-- Running the `python3 3e_green_devices_cleaner_by_week.py` program every `00:01:00` with Crontab.
+- If the hardware sources are good enough, it can run the `python3 3e_green_devices_cleaner_by_week.py` program every `00:01:00` with Crontab.
 - The above command will store the masured result with the CSV file format.
 
-## Run data importer
+## Running the device batch cleaner
+
+- Running the `./batch_clean.sh` to clean the outdated data. And it can save the hardware sources.
+
+## Running the data importer
+
+- Running the `python3 3e_green_devices_importer.py` program every 5 minutes with Crontab.
 
 ## References
 
