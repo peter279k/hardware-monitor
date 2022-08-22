@@ -11,7 +11,7 @@ if os.path.isdir(archived_path) is False:
     os.mkdir(archived_path)
 
 csv_file_paths = glob.glob(archived_path + '*.csv')
-csv_file_paths.extend(glob.glob('./*.csv'))
+#csv_file_paths.extend(glob.glob('./*.csv'))
 for csv_file_path in csv_file_paths:
     file_date = datetime.datetime.fromtimestamp(int(csv_file_path.split('_')[1][0:-4]) / 1000)
     diff_days = (today_date - file_date).days
