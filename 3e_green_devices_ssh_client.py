@@ -7,6 +7,12 @@ from paramiko.client import AutoAddPolicy
 from paramiko.ssh_exception import SSHException
 
 
+archived_path = './archived'
+if os.path.isdir(archived_path) is False:
+    os.mkdir(archived_path)
+    print(archived_path + ' has been created.')
+
+
 ssh_auth_path = './ssh_auth.txt'
 if os.path.isfile(ssh_auth_path) is False:
     print(ssh_auth_path + ' is not existed. Exited.')
