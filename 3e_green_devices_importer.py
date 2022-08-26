@@ -4,6 +4,12 @@ import glob
 from clickhouse_driver import Client
 
 
+archived_path = './archived'
+if os.path.isdir(archived_path) is False:
+    os.mkdir(archived_path)
+    print(archived_path + ' has been created.')
+
+
 mysql_auth_path = './mysql_auth.txt'
 if os.path.isfile(mysql_auth_path) is False:
     print(mysql_auth_path + ' is not existed. Exited.')
