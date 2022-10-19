@@ -29,7 +29,14 @@ client = Client(host=db_ip_address, user=db_username, password=db_password, data
 
 for measured_file in measured_files:
     file_handler = open(measured_file, 'r')
-    csv_string = file_handler.readlines()[0][0:-1]
+    try:
+        csv_string = file_handler.readlines()
+        csv_string = csv_string[0][0:-1]
+    except:
+        print(csv_string)
+        print('The %s file format is invalid.' % (measured_file))
+        continue
+
     file_handler.close()
     table_name = measured_file.split('_')[0][2:]
     sql = 'INSERT INTO %s.%s FORMAT CSV %s' % (database_name, table_name, csv_string)
