@@ -27,6 +27,8 @@ file_contents = handler.readlines()
 
 index = 0
 for file_content in file_contents:
+    if 'sensor' in file_content:
+        break
     file_contents[index] = file_content[0:-1]
     index += 1
 
