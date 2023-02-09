@@ -4,3 +4,4 @@ sensor_db_name=
 sensor_db_username=
 sensor_db_password=
 sensor_db_port=
+sensor_db_table=
