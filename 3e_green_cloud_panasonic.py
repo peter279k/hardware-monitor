@@ -43,7 +43,7 @@ for uuid_mac_address in contents:
             'date': date_range,
         }
         post_data = json.dumps(post_data)
-        response = requests.post(history_api_url, data=post_data, headers=headers, timeout=10)
+        response = requests.post(history_api_url, data=post_data, headers=headers, timeout=60)
 
     except Exception as e:
         print(str(e))
