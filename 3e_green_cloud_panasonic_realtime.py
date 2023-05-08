@@ -90,8 +90,9 @@ cursor = connection.cursor()
 
 records = response.json()
 sensor_sql = '''
-    INSERT INTO table_name (current, temperature, watts, measured_datetime)
+    INSERT INTO "table_name" (current, temperature, watts, measured_datetime)
     VALUES(%s, %s, %s, %s)
+    ON CONFLICT (measured_datetime) DO NOTHING;
 '''
 for record in records:
     table_name = device_nickname_mapping[record['address']]
@@ -100,12 +101,13 @@ for record in records:
     watts = record['watts']
     last_updated = record['lastUpdated']
     measured_datetime = datetime.datetime.strptime(last_updated, '%Y-%m-%d, %H:%M:%S')
+    sensor_data_sql = sensor_sql.replace('table_name', table_name)
 
     prepared_args = (
         current, temperature, watts, measured_datetime,
     )
 
-    cursor.execute(sensor_sql, prepared_args)
+    cursor.execute(sensor_data_sql, prepared_args)
 
 try:
     connection.commit()
