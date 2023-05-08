@@ -1,0 +1,16 @@
+[Unit]
+Description=3eGreenCloudPanasonicRealtime
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=localadmin
+Group=localadmin
+Restart=always
+StartLimitInterval=600
+Type=simple
+WorkingDirectory=/home/localadmin/hardware-monitor
+ExecStart=/usr/bin/python3.6 3e_green_cloud_panasonic_realtime.py
+
+[Install]
+WantedBy=multi-user.target

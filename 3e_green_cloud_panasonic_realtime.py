@@ -1,5 +1,6 @@
 import os
 import json
+import time
 import datetime
 import psycopg2
 import requests
@@ -72,52 +73,56 @@ while index < (len(uuid_contents) - 1):
 
 
 realtime_api_url = contents[0][0:-1]
-response = requests.get(realtime_api_url)
 
-try:
-    connection = psycopg2.connect(
-        database=postgres_auth['db_name'],
-        user=postgres_auth['db_user'],
-        password=postgres_auth['db_password'],
-        host=postgres_auth['db_host'],
-        port=postgres_auth['db_port']
-    )
-except Exception as e:
-    print(str(e))
-    exit(1)
+while True:
+    response = requests.get(realtime_api_url)
 
-cursor = connection.cursor()
+    try:
+        connection = psycopg2.connect(
+            database=postgres_auth['db_name'],
+            user=postgres_auth['db_user'],
+            password=postgres_auth['db_password'],
+            host=postgres_auth['db_host'],
+            port=postgres_auth['db_port']
+        )
+    except Exception as e:
+        print(str(e))
+        exit(1)
 
-records = response.json()
-sensor_sql = '''
-    INSERT INTO "table_name" (current, temperature, watts, measured_datetime)
-    VALUES(%s, %s, %s, %s)
-    ON CONFLICT (measured_datetime) DO NOTHING;
-'''
-for record in records:
-    table_name = device_nickname_mapping[record['address']]
-    current = record['current']
-    temperature = record['temperature']
-    watts = record['watts']
-    last_updated = record['lastUpdated']
-    measured_datetime = datetime.datetime.strptime(last_updated, '%Y-%m-%d, %H:%M:%S')
-    sensor_data_sql = sensor_sql.replace('table_name', table_name)
+    cursor = connection.cursor()
 
-    prepared_args = (
-        current, temperature, watts, measured_datetime,
-    )
+    records = response.json()
+    sensor_sql = '''
+        INSERT INTO "table_name" (current, temperature, watts, measured_datetime)
+        VALUES(%s, %s, %s, %s)
+        ON CONFLICT (measured_datetime) DO NOTHING;
+    '''
+    for record in records:
+        table_name = device_nickname_mapping[record['address']]
+        current = record['current']
+        temperature = record['temperature']
+        watts = record['watts']
+        last_updated = record['lastUpdated']
+        measured_datetime = datetime.datetime.strptime(last_updated, '%Y-%m-%d, %H:%M:%S')
+        sensor_data_sql = sensor_sql.replace('table_name', table_name)
 
-    cursor.execute(sensor_data_sql, prepared_args)
+        prepared_args = (
+            current, temperature, watts, measured_datetime,
+        )
 
-try:
-    connection.commit()
-except Exception as e:
-    print('Error happended when inserting')
-    print(str(e))
+        cursor.execute(sensor_data_sql, prepared_args)
+
+    try:
+        connection.commit()
+    except Exception as e:
+        print('Error happended when inserting')
+        print(str(e))
+        cursor.close()
+        connection.close()
+        exit(1)
+
+
     cursor.close()
     connection.close()
-    exit(1)
 
-
-cursor.close()
-connection.close()
+    time.sleep(30)
