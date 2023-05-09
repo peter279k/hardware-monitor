@@ -45,7 +45,7 @@ do
     sed -i "s/table_name/$device_info/g" temp.sql
 
     psql -U "$db_user" --host="$db_host" --dbname="$db_name" -f "temp.sql"
-    psql -U "$db_user" --host="$db_host" --dbname="$db_name" -c "CREATE INDEX IF NOT EXISTS index_measured_datetime ON $device_info(measured_datetime);"
+    psql -U "$db_user" --host="$db_host" --dbname="$db_name" -c "CREATE INDEX IF NOT EXISTS index_measured_datetime ON \"$device_info\"(measured_datetime);"
 
     if [[ $? == 0 ]]; then
         echo "Processing the $device_info is done."
