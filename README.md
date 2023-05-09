@@ -56,7 +56,7 @@
 ## Fake Panasonic Demo
 
 - Running the `create_panasonic_realtime_table.sh` shell script.
-- Editing the `3e_green_cloud_panasonic_realtime.service.example` to be ``3e_green_cloud_panasonic_realtime.service` fil and setup the background service.
+- Editing the `3e_green_cloud_panasonic_realtime.service.example` to be `3e_green_cloud_panasonic_realtime.service` and setup the background service.
 - Running the `3e_green_cloud_panasonic_realtime.py` Python program as the daemon program.
 
 ## References

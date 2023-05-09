@@ -36,7 +36,7 @@ index=0
 for device_info in $(cat uuid_panasonic_realtime.txt)
 do
     if [[ $(( $index % 2 )) == 0 ]]; then
-        index=$((index +1 ))
+        index=$(( index +1 ))
         continue
     fi;
 
@@ -45,6 +45,7 @@ do
     sed -i "s/table_name/$device_info/g" temp.sql
 
     psql -U "$db_user" --host="$db_host" --dbname="$db_name" -f "temp.sql"
+    psql -U "$db_user" --host="$db_host" --dbname="$db_name" -c "CREATE INDEX IF NOT EXISTS index_measured_datetime ON $device_info(measured_datetime);"
 
     if [[ $? == 0 ]]; then
         echo "Processing the $device_info is done."
@@ -52,7 +53,7 @@ do
         echo "Processing the $device_info is failed."
     fi;
 
-    index=$((index +1 ))
+    index=$(( index +1 ))
 done;
 
 
