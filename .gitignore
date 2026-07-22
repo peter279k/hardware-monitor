@@ -1,5 +1,6 @@
 venv/
 *.txt
+sensor_data.json
 !requirements.txt
 *.csv
 converted/
