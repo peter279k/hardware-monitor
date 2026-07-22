@@ -4,6 +4,7 @@
 
 - Clone this repository with the `git` command.
 - Running the `python3 -m venv venv` to create the Python virtual env for this repository.
+- Running the `source venv/bin/pip install tinydb requests`
 
 ## Usage
 
