@@ -21,27 +21,7 @@ def convert_timestamp(timestamp):
     date_time = datetime.fromtimestamp(timestamp / 1000, tz)
     return date_time.strftime('%Y-%m-%d %H:%M:%S')
 
-
-def load_target_uuids(path):
-    """讀取 uuid.txt,取出 'sensor' 這一行之前的 uuid 清單。"""
-    if not os.path.isfile(path):
-        print(path + ' is not existed.')
-        sys.exit(1)
-
-    with open(path, 'r') as handler:
-        lines = handler.readlines()
-
-    uuids = []
-    for line in lines:
-        if 'sensor' in line:
-            break
-        uuid = line.strip()
-        if uuid:                     # 略過空行
-            uuids.append(uuid)
-    return uuids
-
-
-def fetch_readings(target_uuids):
+def fetch_readings():
     """
     從 gateway 抓取資料,篩選出目標 uuid 的讀數,回傳 list of dict。
     網路或解析失敗時回傳空 list,不讓整個記錄器中斷。
@@ -59,23 +39,19 @@ def fetch_readings(target_uuids):
 
     readings = []
     for item in json_lists:
-        if item['uuid'] in target_uuids:
-            readings.append({
-                'uuid': item['uuid'],
-                'current': float(item['current']),
-                'batt': item['battery'],
-                'temp': item['temperature'],
-                'formatted_time': item['formatedTime'],
-                'timestamp': convert_timestamp(item['tiemstamp']),
-            })
+        readings.append({
+            'uuid': item['uuid'],
+            'current': float(item['current']),
+            'batt': item['battery'],
+            'temp': item['temperature'],
+            'formatted_time': item['formatedTime'],
+            'timestamp': convert_timestamp(item['tiemstamp']),
+        })
     return readings
 
 
 def main():
     print('3e Green Gateway 感測資料記錄器啟動中...')
-
-    target_uuids = load_target_uuids(UUID_PATH)
-    print(f'追蹤 {len(target_uuids)} 個裝置: {target_uuids}')
 
     db = TinyDB(DB_PATH)
 
@@ -88,7 +64,7 @@ def main():
 
     try:
         while True:
-            readings = fetch_readings(target_uuids)
+            readings = fetch_readings()
 
             new_count = 0
             for r in readings:
