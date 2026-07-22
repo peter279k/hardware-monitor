@@ -1,6 +1,8 @@
+venv/
 *.txt
 !requirements.txt
 *.csv
 converted/
 archived/
 panasonic_sensor_demo_data/
+green-gateway-logger.service

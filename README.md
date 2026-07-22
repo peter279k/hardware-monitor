@@ -1,5 +1,10 @@
 # Hardware Monitor for Linux-like operating system
 
+## Setup
+
+- Clone this repository with the `git` command.
+- Running the `python3 -m venv venv` to create the Python virtual env for this repository.
+
 ## Usage
 
 - Download the `monitor.sh`.
@@ -37,6 +42,13 @@
 
 - Running the `python3 3e_green_devices.py` program every 1 minute with Crontab.
 - The above command will store the masured result with the CSV file format.
+
+## Running the device fetcher (Update: 2026/07/22)
+
+- Configuring the `green-gateway-logger.service` service file. It can refer example service file.
+- Running the `sudo cp green-gateway-logger.service /etc/systemd/system/`.
+- Running the `sudo systemclt daemon-reload`.
+- Running the `sudo systemctl enable --now green-gateway-logger.service` to enable and run this service.
 
 ## Running the device batch cleaner
 

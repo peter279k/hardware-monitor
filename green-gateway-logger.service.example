@@ -1,0 +1,27 @@
+[Unit]
+Description=3e Green Gateway Logger (TinyDB)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+User=localadmin
+Group=localadmin
+
+WorkingDirectory=/home/localadmin/hardware-monitor
+
+ExecStart=/home/localadmin/hardware-monitor/venv/bin/python 3e_green_gw_logger.py
+
+Restart=on-failure
+RestartSec=10
+
+Environment="PYTHONUNBUFFERED=1"
+Environment="LIST_URL=http://{IP_ADDRESS}:9100/list"
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=3e-green-gateway-logger
+
+[Install]
+WantedBy=multi-user.target
