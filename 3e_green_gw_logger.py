@@ -8,7 +8,6 @@ from zoneinfo import ZoneInfo
 
 
 # ---------------- 設定 ----------------
-UUID_PATH = './uuid.txt'                    # 目標裝置清單
 DB_PATH = './sensor_data.json'              # TinyDB 資料檔(可改成 USB/SSD 路徑)
 LIST_URL = os.getenv('LIST_URL', '')        # gateway 資料來源
 INTERVAL = 60                               # 取樣間隔(秒),每分鐘一筆
@@ -23,7 +22,7 @@ def convert_timestamp(timestamp):
 
 def fetch_readings():
     """
-    從 gateway 抓取資料,篩選出目標 uuid 的讀數,回傳 list of dict。
+    從 gateway 取得資料list of dict。
     網路或解析失敗時回傳空 list,不讓整個記錄器中斷。
     """
     try:
