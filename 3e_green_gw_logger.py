@@ -9,7 +9,7 @@ from zoneinfo import ZoneInfo
 
 # ---------------- 設定 ----------------
 DB_PATH = './sensor_data.json'              # TinyDB 資料檔(可改成 USB/SSD 路徑)
-LIST_URL = os.getenv('LIST_URL', '')        # gateway 資料來源
+LIST_URL = f'http://{sys.argv[1]}:9100/list'# gateway 資料來源
 INTERVAL = 60                               # 取樣間隔(秒),每分鐘一筆
 BATCH_SIZE = 10                             # 累積幾筆才寫入磁碟(約 10 分鐘)
 # --------------------------------------
@@ -44,7 +44,7 @@ def fetch_readings():
             'batt': item['battery'],
             'temp': item['temperature'],
             'formatted_time': item['formatedTime'],
-            'timestamp': convert_timestamp(item['tiemstamp']),
+            'timestamp': convert_timestamp(item['timestamp']),
         })
     return readings
 
@@ -67,7 +67,7 @@ def main():
 
             new_count = 0
             for r in readings:
-                key = (r['uuid'], r['time'])
+                key = (r['uuid'], r['timestamp'])
                 if key in seen:
                     continue                 # 同一裝置、同一時間戳,已記錄過
                 seen.add(key)
