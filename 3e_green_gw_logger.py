@@ -55,7 +55,7 @@ def main():
     db = TinyDB(DB_PATH)
 
     # 載入資料庫中既有的 (uuid, time) 組合,重啟後也不會重複寫入
-    seen = {(r['uuid'], r['time']) for r in db.all()}
+    seen = {(r['uuid'], r['timestamp']) for r in db.all()}
     print(f'資料庫已有 {len(seen)} 筆紀錄')
 
     buffer = []          # 記憶體暫存區
