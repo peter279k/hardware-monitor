@@ -51,6 +51,16 @@
 - Running the `sudo systemclt daemon-reload`.
 - Running the `sudo systemctl enable --now green-gateway-logger.service` to enable and run this service.
 
+## Running the sensor data publisher (Update: 2026/07/27)
+
+- Creating the `certs` folder and add the `ca_certificate.pem` file.
+- Editing the `3e_green_mqtt.env` file and it can referer the `3e_green_mqtt.env.example` file. 
+- Configuring the `cronjob` and the related command is as follows:
+
+```sh
+*/50 * * * * cd /home/localadmin/hardware-monitor && ./run_3e_green_mqtt_publisher.sh
+```
+
 ## Running the device batch cleaner
 
 - Running the `./batch_clean.sh` to clean the outdated data. And it can save the hardware sources.

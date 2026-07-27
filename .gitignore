@@ -1,3 +1,4 @@
+certs/
 venv/
 *.txt
 sensor_data.json
@@ -7,3 +8,5 @@ converted/
 archived/
 panasonic_sensor_demo_data/
 green-gateway-logger.service
+3e_green_mqtt.env
+mqtt_publisher.log
