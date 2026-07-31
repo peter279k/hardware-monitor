@@ -4,3 +4,4 @@ scp==0.14.4
 psycopg2==2.9.6
 clickhouse-driver==0.2.3
 paho-mqtt
+psutil
