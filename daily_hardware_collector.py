@@ -199,7 +199,7 @@ def write_opensearch_log(row):
     password = os.getenv('PASS', 'admin')
     AUTH = HTTPBasicAuth(username, password)
     response = requests.post(
-        f'{BASE}/app-logs/_doc',
+        f'{BASE}/vm110-logs/_doc',
         json={'level': 'INFO', 'message': json.dumps(row)},
         auth=AUTH,
         verify=False
