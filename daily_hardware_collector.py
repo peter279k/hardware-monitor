@@ -25,9 +25,12 @@ import os
 import csv
 import json
 import shutil
-import datetime
-import subprocess
 import psutil
+import datetime
+import requests
+import subprocess
+from requests.auth import HTTPBasicAuth
+
 
 CSV_PATH = "vm_daily_report.csv"
 WINDOW_HOURS = 24  # Past of 24 hours log
@@ -190,10 +193,26 @@ def append_csv(row, path=CSV_PATH):
             writer.writeheader()
         writer.writerow(row)
 
+def write_opensearch_log(row):
+    base = os.getenv('BASE', 'https://10.41.0.227:9200')
+    username = os.getenv('USER', 'admin')
+    password = os.getenv('PASS', 'admin')
+    AUTH = HTTPBasicAuth(username, password)
+    response = requests.post(
+        f'{BASE}/app-logs/_doc',
+        json={'level': 'INFO', 'message': json.dumps(row)},
+        auth=AUTH,
+        verify=False
+    )
+
+    return response
+
 
 if __name__ == "__main__":
     r = build_row()
+    write_opensearch_log(r)
     append_csv(r)
+
     print("Collecting one metric:")
     for k in FIELDS:
         print(f"  {k:20s}: {r[k]}")
