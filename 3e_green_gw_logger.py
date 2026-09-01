@@ -100,7 +100,7 @@ def fetch_readings(list_url):
                 ts_ms,
                 item.get('formatedTime'),
                 convert_timestamp(ts_ms),
-                to_float(item.get('current')),
+                to_float(item.get('current')) * to_float(item.get('scale')),
                 to_float(item.get('battery')),
                 to_float(item.get('temperature')),
             ))
