@@ -61,6 +61,15 @@
 */50 * * * * cd /home/localadmin/hardware-monitor && ./run_3e_green_mqtt_publisher.sh
 ```
 
+## Running the sensor data cleaner for publisher (Update: 2026/09/22)
+
+- Creating the `edge_ai.env` file.
+- Configuring the Cronjob with `crontab` command:
+
+```bash
+30 21 * * * /home/localadmin/hardware-monitor/run_mqtt_published_cleanup.sh
+```
+
 ## Running the train abnormal current detecting on the Edge (Update: 2026/09/22)
 
 - Creating the `3e-green-edge-ai-train.timer` timer file to configure the training schedule.
