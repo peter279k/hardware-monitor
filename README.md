@@ -69,6 +69,9 @@
 After configuring the timer and service, running the following command to enable and start them:
 
 ```bash
+sudo cp 3e-green-edge-ai.service /etc/systemd/system/
+sudo cp 3e-green-edge-ai-train.timer /etc/systemd/system/
+
 sudo systemctl daemon-reload
 sudo systemctl enable --now 3e-green-edge-ai.service
 sudo systemctl enable --now 3e-green-edge-ai-train.timer
@@ -85,6 +88,8 @@ sudo systemctl start 3e-green-edge-ai-train
 After configuring the service configuration, running the following command to enable and start them:
 
 ```bash
+sudo cp 3e-green-edge-ai.service /etc/systemd/system/
+
 sudo systemctl daemon-reload
 sudo systemctl enable --now 3e-green-edge-ai.service
 ```
