@@ -94,6 +94,8 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now 3e-green-edge-ai.service
 ```
 
+- It can execute the `./quick-edge-ai.sh` script to setup Edge AI for training and inference quickly.
+
 ## Running the device batch cleaner
 
 - Running the `./batch_clean.sh` to clean the outdated data. And it can save the hardware sources.
