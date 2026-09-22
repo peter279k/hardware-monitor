@@ -61,6 +61,34 @@
 */50 * * * * cd /home/localadmin/hardware-monitor && ./run_3e_green_mqtt_publisher.sh
 ```
 
+## Running the train abnormal current detecting on the Edge (Update: 2026/09/22)
+
+- Creating the `3e-green-edge-ai-train.timer` timer file to configure the training schedule.
+- Creating the `3e-green-edge-ai-train.service` service file to configure the training daemon. 
+
+After configuring the timer and service, running the following command to enable and start them:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now 3e-green-edge-ai.service
+sudo systemctl enable --now 3e-green-edge-ai-train.timer
+
+journalctl -u 3e-green-edge-ai -f
+systemctl list-timers | grep edge-ai
+sudo systemctl start 3e-green-edge-ai-train
+```
+
+## Running the infer abnormal current detecting on the Edge (Update: 2026/09/22)
+
+- Creating the `3e-green-edge-ai.service` file to configure inference service config.
+
+After configuring the service configuration, running the following command to enable and start them:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now 3e-green-edge-ai.service
+```
+
 ## Running the device batch cleaner
 
 - Running the `./batch_clean.sh` to clean the outdated data. And it can save the hardware sources.

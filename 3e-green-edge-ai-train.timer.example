@@ -1,0 +1,9 @@
+[Unit]
+Description=Run Edge AI training every Sunday 03:00
+
+[Timer]
+OnCalendar=Sun *-*-* 03:00:00 Asia/Taipei
+Persistent=true
+
+[Install]
+WantedBy=timers.target

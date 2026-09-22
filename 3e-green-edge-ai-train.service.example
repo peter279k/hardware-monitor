@@ -1,0 +1,13 @@
+[Unit]
+Description=3e Green Edge AI Weekly Training
+After=3e-green-logger.service
+
+[Service]
+Type=oneshot
+User=localadmin
+Group=localadmin
+WorkingDirectory=/home/localadmin/hardware-monitor
+EnvironmentFile=/home/localadmin/hardware-monitor/edge_ai.env
+ExecStart=/home/localadmin/hardware-monitor/venv/bin/python 3e_green_smh_edge_ai.py train 14
+Nice=15
+SyslogIdentifier=3e-green-smh-edge-ai-train

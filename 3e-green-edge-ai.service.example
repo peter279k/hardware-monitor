@@ -1,0 +1,19 @@
+[Unit]
+Description=3e Green Edge AI Inference
+After=3e-green-logger.service
+
+[Service]
+Type=simple
+User=localadmin
+Group=localadmin
+WorkingDirectory=/home/localadmin/hardware-monitor
+ExecStart=/home/localadmin/hardware-monitor/venv/bin/python 3e_green_smh_edge_ai.py infer
+Restart=always
+RestartSec=30
+Nice=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=3e-green-smh-edge-ai
+
+[Install]
+WantedBy=multi-user.target
