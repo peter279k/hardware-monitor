@@ -12,7 +12,6 @@ sudo cp 3e-green-edge-ai-train.service /etc/systemd/system/
 sudo cp 3e-green-edge-ai-train.timer /etc/systemd/system/
 
 sudo systemctl daemon-reload
-sudo systemctl enable --now 3e-green-edge-ai-train.service
 sudo systemctl enable --now 3e-green-edge-ai-train.timer
 
 echo "Setup the Edge AI Inference..."
